@@ -1,0 +1,40 @@
+<div class="container mt-1">
+
+  <ng-template #errors>
+   <span class="text-danger">{{errorMessage}}</span>
+  </ng-template>
+
+  <div class="card"  *ngIf="products; else errors">
+    <div class="card-header text-center">
+        List Products
+    </div>
+    <div class="card-body">
+      <div>
+        <form class="d-flex" [formGroup]="searchFormGroup"  (ngSubmit)="handleSearchProduct()" >
+          <input formControlName="keyword" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+        <table class="table">
+          <thead>
+              <tr><th>ID</th> <th>Name</th> <th>Price</th> </tr>
+          </thead>
+          <tbody>
+                <tr *ngFor="let p of products">
+                    <td>{{p.id}}</td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.price}}</td>
+                    <td class="text-success"><span *ngIf="p.promotion==true">promo</span></td>
+                    <td *ngIf="authenticationService.hasRoles('ADMIN')">
+                      <button (click)="handleSetPromo(p)"  class="btn" [ngClass]="p.promotion===true?'btn-danger': 'btn-success'">
+                        <span *ngIf="p.promotion===true" ><i class="bi bi-heart"></i> promo Off</span>
+                        <span *ngIf="p.promotion===false">promo On</span>
+                      </button>
+                    </td>
+                    <td *ngIf="authenticationService.hasRoles('ADMIN')" ><button (click)="handleDeleteProduct(p)" class="btn btn-danger"> Delete</button></td>
+                </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
