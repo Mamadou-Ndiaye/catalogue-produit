@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="mt-3  offset-md-3 col-md-6">
+    <div class="card">
+      <div class="card-header">New Product</div>
+
+      <div class="card-body">
+        <form  [formGroup]="productFormGroup" (ngSubmit)="handleEditProduct()" >
+
+          <!--          <div class="mb-3">-->
+          <!--            <input name="id" type="hidden" formControlName="name" class="form-control">-->
+          <!--          </div>-->
+
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input name="name" type="text" formControlName="name" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label  class="form-label">Price</label>
+            <input type="text" name="password" formControlName="price" class="form-control">
+          </div>
+
+
+          <div class="mb-3">
+            <label  class="form-label">Promotion</label>
+            <input  type="checkbox" name="promotion" formControlName="promotion" class="form-check-input ms-2">
+          </div>
+
+          <button  [disabled]="productFormGroup.invalid" class=" btn btn-primary" type="submit">Save</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

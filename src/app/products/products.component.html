@@ -4,6 +4,10 @@
    <span class="text-danger">{{errorMessage}}</span>
   </ng-template>
 
+  <nav class="m-2 p-2 border border-info">
+    <button (click)="handleNewProduct()" class="btn btn-outline-info">New Product</button>
+  </nav>
+
   <div class="card"  *ngIf="products; else errors">
     <div class="card-header text-center">
         List Products
@@ -32,6 +36,7 @@
                       </button>
                     </td>
                     <td *ngIf="authenticationService.hasRoles('ADMIN')" ><button (click)="handleDeleteProduct(p)" class="btn btn-danger"> Delete</button></td>
+                    <td *ngIf="authenticationService.hasRoles('ADMIN')" ><button (click)="handleEditProduct(p)" class="btn btn-warning"> Edit</button></td>
                 </tr>
           </tbody>
         </table>

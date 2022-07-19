@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import {Product} from "../model/product";
 import { AuthenticationService } from '../services/authentication.service';
 import {ProductsService} from "../services/products.service";
@@ -16,7 +17,10 @@ export class ProductsComponent implements OnInit {
 
   searchFormGroup! : FormGroup;
 
-  constructor(private productService: ProductsService, private  fb: FormBuilder, public authenticationService: AuthenticationService) { }
+  constructor(private productService: ProductsService,
+              private  fb: FormBuilder,
+              public authenticationService: AuthenticationService,
+              private  router: Router) { }
 
   ngOnInit(): void {
     this.searchFormGroup= this.fb.group({
@@ -81,5 +85,14 @@ export class ProductsComponent implements OnInit {
         }
       }
     )
+  }
+
+  handleNewProduct() {
+     this.router.navigateByUrl("/admin/new-product");
+  }
+
+  handleEditProduct(p: Product) {
+    this.router.navigate(["/admin/edit-product/"+p.id]);
+
   }
 }
