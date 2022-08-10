@@ -20,23 +20,46 @@
         </form>
       </div>
         <table class="table">
+
+         <thead *ngIf="this.authenticationService.hasRoles('ADMIN')">
+          <tr>
+            <td><i  (click)="setSelection(!selectMode)" class="btn" [ngClass]="selectMode==true?'bi bi-check-square':'bi-square'" ></i></td>
+            <td>
+              <select (change)="setSelection(true)" [(ngModel)]="selection" class="form-select">
+                <option value="all">All</option>
+                <option value="promo">Promo</option>
+              </select>
+            </td>
+            <td *ngIf="selectedProducts.length>0">
+              <i class="btn btn-danger bi bi-trash ms-1" (click)="handleDeleteSelection()"></i>
+              <i class="btn btn-danger bi bi-heart-arrow ms-1" (click)="handlePromotion()"></i>
+            </td>
+          </tr>
+          </thead>
+
           <thead>
               <tr><th>ID</th> <th>Name</th> <th>Price</th> </tr>
           </thead>
           <tbody>
                 <tr *ngFor="let p of products">
+                  <td *ngIf="this.authenticationService.hasRoles('ADMIN')">
+<!--
+                    <i (click)="select(p)" [ngClass]="p.promotion==true?'bi bi-check-square':'bi-square'" class="btn"></i>
+-->
+                    <input type="checkbox" name="{{p.name}}"  value="{{p}}"  (change)="addOrRemoveProduct(p)" class="form-check-input" id="{{p.id}}">
+                  </td>
                     <td>{{p.id}}</td>
                     <td>{{p.name}}</td>
                     <td>{{p.price}}</td>
-                    <td class="text-success"><span *ngIf="p.promotion==true">promo</span></td>
+                    <td class="text-success"><span *ngIf="p.promotion===true" ><i class="bi bi-heart-fill"></i></span></td>
                     <td *ngIf="authenticationService.hasRoles('ADMIN')">
                       <button (click)="handleSetPromo(p)"  class="btn" [ngClass]="p.promotion===true?'btn-danger': 'btn-success'">
-                        <span *ngIf="p.promotion===true" ><i class="bi bi-heart"></i> promo Off</span>
+                        <span *ngIf="p.promotion===true" >promo Off</span>
                         <span *ngIf="p.promotion===false">promo On</span>
                       </button>
                     </td>
-                    <td *ngIf="authenticationService.hasRoles('ADMIN')" ><button (click)="handleDeleteProduct(p)" class="btn btn-danger"> Delete</button></td>
-                    <td *ngIf="authenticationService.hasRoles('ADMIN')" ><button (click)="handleEditProduct(p)" class="btn btn-warning"> Edit</button></td>
+                    <td *ngIf="authenticationService.hasRoles('ADMIN')" ><button (click)="handleDeleteProduct(p)" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></td>
+                    <td *ngIf="authenticationService.hasRoles('ADMIN')" ><button (click)="handleEditProduct(p)"  class="btn btn-info"> <i class="bi bi-pencil-fill"></i></button></td>
                 </tr>
           </tbody>
         </table>

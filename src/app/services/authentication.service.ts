@@ -37,7 +37,7 @@ export class AuthenticationService {
      return of(true);
   }
 
-  hasRoles(role: string): boolean{
+  public  hasRoles(role: string): boolean{
    return this.authenticatedUser!.roles.includes(role);
   }
 

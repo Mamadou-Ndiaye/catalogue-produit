@@ -68,4 +68,10 @@ export class ProductsService {
   }
 
 
+  public deleteListProducts(products : Product[]):Observable<boolean>{
+    this.products=this.products.filter(prod=> products.find(p=>p.id==prod.id)==null);
+    return of(true);
+  }
+
+
 }
